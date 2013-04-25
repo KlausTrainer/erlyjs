@@ -210,8 +210,8 @@ UnaryExpression -> void UnaryExpression : {op, '$1', '$2'}. % TODO
 UnaryExpression -> typeof UnaryExpression : {op, '$1', '$2'}. % TODO
 UnaryExpression -> '++' UnaryExpression : {op, '$1', '$2'}.
 UnaryExpression -> '--' UnaryExpression : {op, '$1', '$2'}.
-UnaryExpression -> '+' UnaryExpression : {op, '$1', '$2'}.
-UnaryExpression -> '-' UnaryExpression : {op, '$1', '$2'}.
+UnaryExpression -> '+' UnaryExpression : plus('$1', '$2').
+UnaryExpression -> '-' UnaryExpression : minus('$1', '$2').
 UnaryExpression -> '~' UnaryExpression : {op, '$1', '$2'}.
 UnaryExpression -> '!' UnaryExpression : {op, '$1', '$2'}.
 
@@ -409,6 +409,14 @@ TopStatement -> FunctionDefinition  : '$1'.
 
 
 Erlang code.
+
+minus(_, {integer, Line, Value}) -> {integer, Line, -Value};
+minus(_, {float, Line, Value}) -> {float, Line, -Value};
+minus(Op, Exp) -> {op, Op, Exp}.
+
+plus(_, Int = {integer, _, _}) -> Int;
+plus(_, Float = {float, _, _}) -> Float;
+plus(Op, Exp) -> {op, Op, Exp}.
 
 postfix({Op, Line}) -> {Op, postfix, Line}.
 

@@ -49,9 +49,9 @@ Comment = (/\*(.|[\r\n])*?\*/|//.*)
 
 Rules.   
 
-(\+|\-)?{Digit}+\.{Digit}+ : build_float(TokenChars, TokenLine).
+{Digit}+\.{Digit}+ : build_float(TokenChars, TokenLine).
 
-(\+|\-)?{Digit}+ : build_integer(TokenChars, TokenLine).
+{Digit}+ : build_integer(TokenChars, TokenLine).
 
 {String} : build_string(TokenChars, TokenLine, TokenLen).
 
